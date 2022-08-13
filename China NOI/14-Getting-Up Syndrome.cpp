@@ -1,17 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 int calculate (vector<pair<string,int> > & vec, int x) {
-    int val = x;
     for (auto& p: vec) {
         if (p.first == "AND") {
-            val = val & p.second;
+            x = x & p.second;
         } else if (p.first == "OR") {
-            val = val | p.second;
+            x = x | p.second;
         } else {
-            val = val ^ p.second;
+            x = x ^ p.second;
         }
     }
-    return val;
+    return x;
 }
 int main() {
     int n, m;
@@ -24,12 +23,9 @@ int main() {
     }
     int ans = 0;
     for (int i = 31; i >= 0; i--) {
-        if ((1 << i) + ans > m) {
-            continue;
+        if ((1 << i) + ans <= m && calculate(vec, 0) < calculate(vec, (1 << i))) {
+            ans += (1 << i);
         }
-        int a0 = calculate(vec, ans);
-        int a1 = calculate(vec, ans + (1 << i));
-        ans += (1 << i) * (a1 > a0);
     }
     cout << calculate(vec, ans);
 }
