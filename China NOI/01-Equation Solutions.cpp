@@ -44,7 +44,7 @@ void rec (int sz, int ans) {
     }
 }
 int main() {
-	int n;
+    int n;
     cin >> n >> M;
     vector<pair<int,int> > vec(n);
     for (int i = 0; i < n/2; i++) {
