@@ -175,8 +175,6 @@ void solve () {
     cout << ans << '\n';
 }
 int main() {
-    freopen("perfectly_balanced_chapter_2_input.txt", "r", stdin);
-    freopen("cbarn.out", "w", stdout);
     b.construct((int)1e6 + 10);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
