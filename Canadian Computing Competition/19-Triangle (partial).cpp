@@ -45,21 +45,28 @@ int main () {
                 if (x == 1) {
                     up[i][j][ind[x]] = down[i][j][ind[x]] = arr[i][j];
                 } else if (x == 2) {
-                    if (i - 1 >= 0 and j + 1 < n) {
-                        up[i][j][ind[x]] = max(max(arr[i][j], arr[i - 1][j]), arr[i][j + 1]);
+                    up[i][j][ind[x]] = down[i][j][ind[x]] = arr[i][j];
+                    if (i - 1 >= 0) {
+                        up[i][j][ind[x]] = max(up[i][j][ind[x]], arr[i - 1][j]);
                     }
-                    if (i + 1 < n and j - 1 >= 0) {
-                        down[i][j][ind[x]] = max(max(arr[i][j], arr[i + 1][j]), arr[i][j - 1]);
+                    if (j + 1 < n) {
+                        up[i][j][ind[x]] = max(up[i][j][ind[x]], arr[i][j + 1]);
+                    }
+                    if (i + 1 < n) {
+                        down[i][j][ind[x]] = max(down[i][j][ind[x]], arr[i + 1][j]);
+                    }
+                    if (j - 1 >= 0) {
+                        down[i][j][ind[x]] = max(down[i][j][ind[x]], arr[i][j - 1]);
                     }
                 } else {
-                    if (i - x/2 >= 0 and j + x/2 < n) {
+                    if (i - x/2 >= 0 and j + x/2 + 1 < n) {
                         if (x % 2 == 0) {
                             up[i][j][ind[x]] = max(max(up[i - x/2][j][ind[x/2]], up[i][j][ind[x/2]]), max(down[i - x/2 + 1][j + x/2 - 1][ind[x/2]], up[i][j + x/2][ind[x/2]]));
                         } else {
                             up[i][j][ind[x]] = max(max(up[i][j][ind[x/2 + 1]], down[i - x/2][j + x/2][ind[x/2 + 1]]), max(up[i][j + x/2 + 1][ind[x/2]], up[i - (x/2 + 1)][j][ind[x/2]]));
                         }
                     }
-                    if (i + x - 1 <= n - 1 and j - (x - 1) >= 0) {
+                    if (i + x/2 + 1 < n and j + x/2 >= 0) {
                         if (x % 2 == 0) {
                             down[i][j][ind[x]] = max(max(down[i + x/2][j][ind[x/2]], down[i][j][ind[x/2]]), max(down[i][j - x/2][ind[x/2]], up[i + (x/2 - 1)][j - (x/2 - 1)][ind[x/2]]));
                         } else {
