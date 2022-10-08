@@ -20,8 +20,8 @@ int main () {
     int arr[n][n];
     rec(k);
     s.erase(0);
-    int up[n][n][s.size()];
-    int down[n][n][s.size()];
+    int up[n][n][2];
+    int down[n][n][2];
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             arr[i][j] = 0;
