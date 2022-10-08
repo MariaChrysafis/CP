@@ -6,9 +6,6 @@ void rec (int x) {
         return;
     }
     s.insert(x);
-    if (x == 0) {
-        return;
-    }
     if (x % 2 == 0) {
         rec(x/2);
     } else {
@@ -19,22 +16,14 @@ void rec (int x) {
 int main () {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    freopen("inp.txt", "r", stdin);
     int n, k;
     cin >> n >> k;
-    vector<vector<vector<int> > > up, down;
-    vector< vector<int> > arr;
+    int arr[n][n];
     rec(k);
     s.erase(0);
-    arr.resize(n);
-    up.resize(n), down.resize(n);
+    int up[n][n][s.size()];
+    int down[n][n][s.size()];
     for (int i = 0; i < n; i++) {
-        arr[i].resize(n);
-        up[i].resize(n), down[i].resize(n);
-        for (int j = 0; j < n; j++) {
-            up[i][j].resize(s.size());
-            down[i][j].resize(s.size());
-        }
         for (int j = 0; j < n; j++) {
             arr[i][j] = 0;
         }
@@ -43,6 +32,9 @@ int main () {
         }
     }
     int ind[k + 1];
+    for (int i = 0; i <= k; i++) {
+        ind[i] = -1;
+    }
     int c = 0;
     for (int x: s) {
         ind[x] = c++;
@@ -60,16 +52,20 @@ int main () {
                         down[i][j][ind[x]] = max(max(arr[i][j], arr[i + 1][j]), arr[i][j - 1]);
                     }
                 } else {
-                    if (x % 2 == 0 and i - x + 1 >= 0 and j + x - 1 <= n - 1) {
-                        up[i][j][ind[x]] = max(max(up[i - x/2][j][ind[x/2]], up[i][j][ind[x/2]]), max(down[i - x/2 + 1][j + x/2 - 1][ind[x/2]], up[i][j + x/2][ind[x/2]]));
-                    } else if (x % 2 == 1 && i - x + 1 >= 0 && j + x - 1 <= n - 1){
-                        up[i][j][ind[x]] = max(max(up[i][j][ind[x/2 + 1]], down[i - x/2][j + x/2][ind[x/2 + 1]]), max(up[i][j + x/2 + 1][ind[x/2]], up[i - (x/2 + 1)][j][ind[x/2]]));
+                    if (i - x/2 >= 0 and j + x/2 < n) {
+                        if (x % 2 == 0) {
+                            up[i][j][ind[x]] = max(max(up[i - x/2][j][ind[x/2]], up[i][j][ind[x/2]]), max(down[i - x/2 + 1][j + x/2 - 1][ind[x/2]], up[i][j + x/2][ind[x/2]]));
+                        } else {
+                            up[i][j][ind[x]] = max(max(up[i][j][ind[x/2 + 1]], down[i - x/2][j + x/2][ind[x/2 + 1]]), max(up[i][j + x/2 + 1][ind[x/2]], up[i - (x/2 + 1)][j][ind[x/2]]));
+                        }
                     }
-                    if (x % 2 == 0 and i + x - 1 <= n - 1 and j - (x - 1) >= 0) {
-                        down[i][j][ind[x]] = max(max(down[i + x/2][j][ind[x/2]], down[i][j][ind[x/2]]), max(down[i][j - x/2][ind[x/2]], up[i + (x/2 - 1)][j - (x/2 - 1)][ind[x/2]]));
-                    } else if (x % 2 == 1 and i + x - 1 <= n - 1 and j - (x - 1) >= 0) {
-                        down[i][j][ind[x]] = max(max(down[i][j - (x/2 + 1)][ind[x/2]], down[i + (x/2 + 1)][j][ind[x/2]]), max(down[i][j][ind[x/2 + 1]], up[i + x/2][j - x/2][ind[x/2 + 1]]));
-                    } 
+                    if (i + x - 1 <= n - 1 and j - (x - 1) >= 0) {
+                        if (x % 2 == 0) {
+                            down[i][j][ind[x]] = max(max(down[i + x/2][j][ind[x/2]], down[i][j][ind[x/2]]), max(down[i][j - x/2][ind[x/2]], up[i + (x/2 - 1)][j - (x/2 - 1)][ind[x/2]]));
+                        } else {
+                            down[i][j][ind[x]] = max(max(down[i][j - (x/2 + 1)][ind[x/2]], down[i + (x/2 + 1)][j][ind[x/2]]), max(down[i][j][ind[x/2 + 1]], up[i + x/2][j - x/2][ind[x/2 + 1]]));
+                        }
+                    }
                 }
             }
         }
