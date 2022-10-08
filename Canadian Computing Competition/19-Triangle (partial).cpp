@@ -71,7 +71,8 @@ int main () {
                         if (x % 2 == 0) {
                             down[i][j][ind[x]] = max(max(down[i + x/2][j][ind[x/2]], down[i][j][ind[x/2]]), max(down[i][j - x/2][ind[x/2]], up[i + (x/2 - 1)][j - (x/2 - 1)][ind[x/2]]));
                         } else {
-                            down[i][j][ind[x]] = max(max(down[i][j - (x/2 + 1)][ind[x/2]], down[i + (x/2 + 1)][j][ind[x/2]]), max(down[i][j][ind[x/2 + 1]], up[i + x/2][j - x/2][ind[x/2 + 1]]));
+                            down[i][j][ind[x]] = max(max(down[i][j - (x/2 + 1)][ind[x/2]], down[i + (x/2 + 1)][j][ind[x/2]]), max(down[i][j][ind[x/2]], up[i + x/2][j - x/2][ind[x/2]]));
+                            down[i][j][ind[x]] = max(down[i][j][ind[x]], max(down[i + 1][j][ind[x/2]], down[i][j - 1][ind[x/2]]));
                         }
                     }
                 }
