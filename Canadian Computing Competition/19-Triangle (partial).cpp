@@ -1,22 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define scan(x) do{while((x=getchar())<'0'); for(x-='0'; '0'<=(_=getchar()); x=(x<<3)+(x<<1)+_-'0');}while(0)
+char _;
 set<int> s;
 void rec (int x) {
     if (s.count(x)) {
         return;
     }
     s.insert(x);
-    if (x % 2 == 0) {
-        rec(x/2);
-    } else {
-        rec(x/2);
-    }
+    rec(x/2);
 }
 int main () {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n, k;
-    cin >> n >> k;
+    scan(n);
+    scan(k);
     int arr[n][n];
     rec(k);
     s.erase(0);
@@ -27,7 +26,7 @@ int main () {
             arr[i][j] = 0;
         }
         for (int j = 0; j <= i; j++) {
-            cin >> arr[i][j];
+            scan(arr[i][j]);
         }
     }
     int ind[k + 1];
