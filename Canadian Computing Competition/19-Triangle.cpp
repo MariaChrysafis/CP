@@ -58,7 +58,7 @@ int main () {
                         down[i][j][ind[x]] = max(down[i][j][ind[x]], arr[i][j - 1]);
                     }
                 } else {
-                    if (i - x/2 >= 0 and j + x/2 + 1 < n) {
+                    if (i - (x - 1) >= 0 and j + (x - 1) < n) {
                         if (x % 2 == 0) {
                             up[i][j][ind[x]] = max(max(up[i - x/2][j][ind[x/2]], up[i][j][ind[x/2]]), max(down[i - x/2 + 1][j + x/2 - 1][ind[x/2]], up[i][j + x/2][ind[x/2]]));
                         } else {
@@ -66,7 +66,7 @@ int main () {
                             up[i][j][ind[x]] = max(up[i][j][ind[x]], max(up[i - 1][j][ind[x/2]], up[i][j + 1][ind[x/2]]));
                         }
                     }
-                    if (i + x/2 + 1 < n and j + x/2 >= 0) {
+                    if (i + (x - 1) < n and j - (x - 1) >= 0) {
                         if (x % 2 == 0) {
                             down[i][j][ind[x]] = max(max(down[i + x/2][j][ind[x/2]], down[i][j][ind[x/2]]), max(down[i][j - x/2][ind[x/2]], up[i + (x/2 - 1)][j - (x/2 - 1)][ind[x/2]]));
                         } else {
