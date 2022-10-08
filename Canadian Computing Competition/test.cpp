@@ -41,7 +41,14 @@ vector<vector<int> >  solve (vector<vector< int > > arr, int k) {
         }
     }
     for (int i = 0; i < a.size(); i++) {
-        a[i] = kLargest(a[i], k);
+        vector<int> v(arr.size() - k + 1);
+        for (int j = 0; j < v.size(); j++) {
+            v[j] = a[i][j];
+        }
+        v = kLargest(v, k);
+        for (int j = 0; j < v.size(); j++) {
+            a[i][j] = v[j];
+        }
     }
     return a;
 }
