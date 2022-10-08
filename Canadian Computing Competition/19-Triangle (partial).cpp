@@ -10,7 +10,6 @@ void rec (int x) {
         rec(x/2);
     } else {
         rec(x/2);
-        rec(x/2 + 1);
     }
 }
 int main () {
