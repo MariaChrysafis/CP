@@ -37,7 +37,7 @@ long long sum_subtriangles (int N, int K, vector<vector<int> > arr) {
     s.erase(1);
     for (int x: s) {
         for (int i = x - 1; i < n; i++) {
-            for (int j = 0; j + x - 1 < n; j++) {
+            for (int j = 0; j + x - 1 <= i; j++) {
                 if (x % 2 == 0) {
                     up[i][j][ind[x]] = max(max(up[i - x/2][j][ind[x/2]], up[i][j][ind[x/2]]), max(down[i - x/2 + 1][j + x/2 - 1][ind[x/2]], up[i][j + x/2][ind[x/2]]));
                 } else {
