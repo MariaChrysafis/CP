@@ -26,7 +26,7 @@ vector<int> kLargest (vector<int> arr, int k) {
     return ans;
 }
 int alpha[3000][3000];
-void solve (vector<vector< int > > arr, int k) {
+void solve (vector<vector< int > > &arr, int k) {
     for (int i = 0; i < arr.size(); i++) {
         vector<int> v;
         for (int j = 0; j < arr.size(); j++) {
