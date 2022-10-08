@@ -25,11 +25,8 @@ vector<int> kLargest (vector<int> arr, int k) {
     }
     return ans;
 }
-vector<vector<int> >  solve (vector<vector< int > > arr, int k) {
-    vector<vector<int> > a(arr.size() - k + 1);
-    for (int i = 0; i < a.size(); i++) {
-        a[i].resize(arr.size());
-    }
+int alpha[3000][3000];
+void solve (vector<vector< int > > arr, int k) {
     for (int i = 0; i < arr.size(); i++) {
         vector<int> v;
         for (int j = 0; j < arr.size(); j++) {
@@ -37,20 +34,19 @@ vector<vector<int> >  solve (vector<vector< int > > arr, int k) {
         }
         v = kLargest(v, k);
         for (int j = 0; j < v.size(); j++) {
-            a[j][i] = v[j];
+            alpha[j][i] = v[j];
         }
     }
-    for (int i = 0; i < a.size(); i++) {
+    for (int i = 0; i < arr.size() - k + 1; i++) {
         vector<int> v(arr.size() - k + 1);
         for (int j = 0; j < v.size(); j++) {
-            v[j] = a[i][j];
+            v[j] = alpha[i][j];
         }
         v = kLargest(v, k);
         for (int j = 0; j < v.size(); j++) {
-            a[i][j] = v[j];
+            alpha[i][j] = v[j];
         }
     }
-    return a;
 }
 long long sum_subtriangles (int N, int K, vector<vector<int> > arr) {
     int n = N; 
@@ -78,10 +74,9 @@ long long sum_subtriangles (int N, int K, vector<vector<int> > arr) {
         }        
     }
     s.erase(1);
-    vector<vector<int> > alpha;
     for (int x: s) {
         int a = ind[x];
-        alpha = solve(arr, (x + 1)/2);
+        solve(arr, (x + 1)/2);
         for (int i = x - 1; i < n; i++) {
             for (int j = 0; j + x - 1 <= i; j++) {
                 if (x % 2 == 0) {
