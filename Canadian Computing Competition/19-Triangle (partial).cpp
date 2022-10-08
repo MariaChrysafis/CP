@@ -37,6 +37,7 @@ int main () {
     int c = 0;
     for (int x: s) {
         ind[x] = c++;
+        ind[x] %= 2;
     }
     for (int x: s) {
         for (int i = 0; i < n; i++) {
