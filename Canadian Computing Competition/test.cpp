@@ -8,6 +8,43 @@ void rec (int x) {
     s.insert(x);
     rec(x/2);
 }
+vector<int> kLargest (vector<int> arr, int k) {
+    deque<pair<int,int> > d;
+    vector<int> ans;
+    for (int i = 0; i < arr.size(); i++) {
+        while (!d.empty() && d.front().first < arr[i]) {
+            d.pop_front();
+        }
+        if (!d.empty() && d.back().second == i - k) {
+            d.pop_back();
+        }
+        d.push_front(make_pair(arr[i], i));
+        if (i >= k - 1) {
+            ans.push_back(d.back().first);
+        }
+    }
+    return ans;
+}
+vector<vector<int> >  solve (vector<vector< int > > arr, int k) {
+    vector<vector<int> > a(arr.size() - k + 1);
+    for (int i = 0; i < a.size(); i++) {
+        a[i].resize(arr.size());
+    }
+    for (int i = 0; i < arr.size(); i++) {
+        vector<int> v;
+        for (int j = 0; j < arr.size(); j++) {
+            v.push_back(arr[j][i]);
+        }
+        v = kLargest(v, k);
+        for (int j = 0; j < v.size(); j++) {
+            a[j][i] = v[j];
+        }
+    }
+    for (int i = 0; i < a.size(); i++) {
+        a[i] = kLargest(a[i], k);
+    }
+    return a;
+}
 long long sum_subtriangles (int N, int K, vector<vector<int> > arr) {
     int n = N; 
     int k = K;
@@ -37,10 +74,11 @@ long long sum_subtriangles (int N, int K, vector<vector<int> > arr) {
     s.erase(1);
     for (int x: s) {
         int a = ind[x];
+        vector<vector<int> > alpha = solve(arr, x/2);
         for (int i = x - 1; i < n; i++) {
             for (int j = 0; j + x - 1 <= i; j++) {
                 if (x % 2 == 0) {
-                    up[i][j][a] = max(max(up[i - x/2][j][!a], up[i][j][!a]), max(down[i - x/2 + 1][j + x/2 - 1][!a], up[i][j + x/2][!a]));
+                    up[i][j][a] = max(max(up[i - x/2][j][!a], up[i][j + x/2][!a]), alpha[i - x/2 + 1][j]);
                 } else {
                     up[i][j][a] = max(max(up[i][j][!a], down[i - x/2][j + x/2][!a]), max(up[i][j + x/2 + 1][!a], up[i - (x/2 + 1)][j][!a]));
                     up[i][j][a] = max(up[i][j][a], max(up[i - 1][j][!a], up[i][j + 1][!a]));
